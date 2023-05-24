@@ -1,0 +1,58 @@
+UC-1
+create database PayrollService;
+use PayrollService;
+
+UC-2
+create table employee_payroll(
+id int primary key auto_increment,
+name varchar(100),
+salary decimal(10, 2),
+start_date date
+);
+
+UC-3
+insert into employee_payroll (name, salary, start_date) values ('Kanishk', 5000.00, '2023-05-01'),
+('Harsh', 6000.00, '2023-05-05'),
+('Tarun', 4500.00, '2023-05-10');
+
+UC-4
+select * from employee_payroll;
+
+UC-5
+select salary from employee_payroll where name = 'Harsh';
+select * from employee_payroll where start_date between cast('2023-05-10' as date) and cast(getdate() as date);
+
+UC-6
+alter table employee_payroll
+add gender char(1) null;
+update employee_payroll
+set gender = 'M'
+where name in ('Bill', 'Charlie');
+
+UC-7
+select sum(salary) from employee_payroll where gender = 'M' group by gender;
+select avg(salary) from employee_payroll where gender = 'F' group by gender;
+select min(salary) from employee_payroll where gender = 'M' group by gender;
+select max(salary) from employee_payroll where gender = 'F' group by gender;
+select gender, count(*) from employee_payroll group by gender;
+
+UC-8
+alter table employee_payroll
+add column phone_number int(100), 
+add column address varchar(100) default 'N/A', 
+add column department varchar(50) not null;
+
+UC-9
+alter table employee_payroll
+add column basic_pay DECIMAL(10, 2),
+add column deductions DECIMAL(10, 2),
+add column taxable_pay DECIMAL(10, 2),
+add column income_tax DECIMAL(10, 2),
+add column net_pay DECIMAL(10, 2);
+
+UC-10
+insert into employee_payroll (name, salary, start_date, gender, phone, address, department)
+values('Terissa', 5000.00, '2023-05-01', 'F', '1234567890', '123 Main St', 'Sales and Marketing');
+update employee_payroll
+set salary = 8000
+where name = 'Terissa' and department = 'Sales and Marketing';
